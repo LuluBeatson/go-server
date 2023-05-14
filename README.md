@@ -7,27 +7,43 @@ This project contains:
 
 # Start
 
-## MySQL
+## Setup MySQL
 
+1. Installation
 ```bash
 sudo apt update
 sudo apt install mysql-server
 ```
 
-```bash
+2. Configuring a user/password
+```
 sudo mysql -u root -h localhost -P 3306
 CREATE USER 'your_username'@'localhost' IDENTIFIED BY 'your_password';
 GRANT ALL PRIVILEGES ON *.* TO 'your_username'@'localhost';
 FLUSH PRIVILEGES;
 exit
 ```
-
-```bash
+3. Create a database
+```
 sudo mysql -u your_username -h localhost -P 3306 -p
 your_password
 CREATE DATABASE bookstore;
 exit
 ```
+
+View the database
+```
+sudo mysql -u your_username -h localhost -P 3306 -p
+your_password
+USE bookstore;
+SELECT * FROM books;
+```
+
+## Configuring the server
+
+Add your MySQL username and password to the `config.json` file.
+
+## Starting the server
 
 ```bash
 go build
