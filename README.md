@@ -1,6 +1,8 @@
 # Go Server
 
-This project combines a series of projects from this [tutorial](https://www.youtube.com/watch?v=jFfo23yIWac) from freeCodeCamp.org.
+This project contains:
+1. A simple HTTP server written in Go [[YouTube](https://www.youtube.com/watch?v=ASBUp7stqjo)]
+2. Movies CRUD API [[YouTube](https://youtu.be/TkbhQQS3m_o)]
 
 # Start
 
