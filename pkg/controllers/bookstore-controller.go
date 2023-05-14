@@ -84,8 +84,8 @@ func UpdateBookHandler(w http.ResponseWriter, r *http.Request) {
 	if book.Author != "" {
 		b.Author = book.Author
 	}
-	if book.Publication != "" {
-		b.Publication = book.Publication
+	if book.Publisher != "" {
+		b.Publisher = book.Publisher
 	}
 
 	// Save the modified book
