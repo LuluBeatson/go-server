@@ -56,12 +56,22 @@ func getMoviesHandler(w http.ResponseWriter, r *http.Request) {
 func getMovieHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	params := mux.Vars(r)
+
+	if movie, err := getMovie(params["id"]); err != nil {
+		http.Error(w, err.Error(), http.StatusNotFound)
+		return
+	} else {
+		json.NewEncoder(w).Encode(*movie)
+	}
+}
+
+func getMovie(id string) (*Movie, error) {
 	for _, movie := range movies {
-		if movie.ID == params["id"] {
-			json.NewEncoder(w).Encode(movie)
-			return
+		if movie.ID == id {
+			return &movie, nil
 		}
 	}
+	return nil, fmt.Errorf("Movie with id %v not found", id)
 }
 
 // create a new movie
@@ -71,8 +81,10 @@ func createMovieHandler(w http.ResponseWriter, r *http.Request) {
 
 	// decode the request body into a movie struct
 	if err := json.NewDecoder(r.Body).Decode(&movie); err != nil {
-		fmt.Println("Error decoding request body:", err)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 	}
+
+	// generate a random id for the movie
 	movie.ID = strconv.Itoa(rand.Intn(1000000))
 	createMovie(movie)
 
@@ -90,10 +102,13 @@ func updateMovieHandler(w http.ResponseWriter, r *http.Request) {
 
 	// decode the request body into a movie struct
 	if err := json.NewDecoder(r.Body).Decode(&movie); err != nil {
-		fmt.Println("Error decoding request body:", err)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 	}
 
-	deleteMovie(params["id"])
+	if err := deleteMovie(params["id"]); err != nil {
+		http.Error(w, err.Error(), http.StatusNotFound)
+		return
+	}
 	movie.ID = params["id"]
 	createMovie(movie)
 	// TODO: make sure movies is unmodified in the event of an error
@@ -104,15 +119,18 @@ func updateMovieHandler(w http.ResponseWriter, r *http.Request) {
 func deleteMovieHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	params := mux.Vars(r)
-	deleteMovie(params["id"])
+	if err := deleteMovie(params["id"]); err != nil {
+		http.Error(w, err.Error(), http.StatusNotFound)
+	}
 }
 
-func deleteMovie(id string) {
+func deleteMovie(id string) error {
 	for i, movie := range movies {
 		if movie.ID == id {
 			// Delete movie from slice by appending all movies before and after the index
 			movies = append(movies[:i], movies[i+1:]...)
-			break
+			return nil
 		}
 	}
+	return fmt.Errorf("Movie with id %s not found", id)
 }
