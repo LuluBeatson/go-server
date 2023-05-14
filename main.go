@@ -1,10 +1,18 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"log"
 	"net/http"
 )
+
+var port int
+
+func init() {
+	flag.IntVar(&port, "port", 8080, "port to listen on")
+	flag.Parse()
+}
 
 func main() {
 	fileServer := http.FileServer(http.Dir("./static"))
@@ -12,7 +20,8 @@ func main() {
 	http.HandleFunc("/hello", helloHandler)
 	http.HandleFunc("/form", formHandler)
 
-	fmt.Printf("Starting server at port 8080\n")
+	fmt.Println("Starting server at port", port)
+	fmt.Printf("http://localhost:%v/", port)
 	if err := http.ListenAndServe(":8080", nil); err != nil {
 		log.Fatal(err)
 	}
