@@ -1,6 +1,6 @@
-# Simple HTTP Server in Go
+# Go Server
 
-This is a simple HTTP server written in Go. It is based on the [tutorial](https://www.youtube.com/watch?v=ASBUp7stqjo) by Akhil Sharma.
+This project combines a series of projects from this [tutorial](https://www.youtube.com/watch?v=jFfo23yIWac) from freeCodeCamp.org.
 
 # Start
 
