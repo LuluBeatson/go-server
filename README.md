@@ -8,12 +8,12 @@ This project contains:
 
 ```bash
 go build
-go run ./
+go run cmd/main/main.go
 ```
 Starts a server on port 8080. To use a different port:
 
 ```bash
-go run ./ -port=5000
+go run cmd/main/main.go -port=5000
 ```
 
 # Postman
