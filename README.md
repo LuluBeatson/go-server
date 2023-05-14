@@ -6,10 +6,14 @@ This is a simple HTTP server written in Go. It is based on the [tutorial](https:
 
 ```bash
 go build
-go run main.go
+go run ./
 ```
 Starts a server on port 8080. To use a different port:
 
 ```bash
-go run main.go -port=5000
+go run ./ -port=5000
 ```
+
+# Postman
+
+https://www.postman.com/avionics-pilot-87779462/workspace/go-server
