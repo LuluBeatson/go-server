@@ -1,5 +1,0 @@
-mySql:
-  usr: your_username
-  pwd: your_password
-  host: localhost
-  port: 3306

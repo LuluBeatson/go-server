@@ -41,7 +41,7 @@ SELECT * FROM books;
 
 ## Configuring the server
 
-Add your MySQL username and password to the `config.json` file.
+Add your MySQL username and password to the `.env` file.
 
 ## Starting the server
 
