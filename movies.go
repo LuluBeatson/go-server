@@ -65,15 +65,6 @@ func getMovieHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func getMovie(id string) (*Movie, error) {
-	for _, movie := range movies {
-		if movie.ID == id {
-			return &movie, nil
-		}
-	}
-	return nil, fmt.Errorf("Movie with id %v not found", id)
-}
-
 // create a new movie
 func createMovieHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
@@ -89,10 +80,6 @@ func createMovieHandler(w http.ResponseWriter, r *http.Request) {
 	createMovie(movie)
 
 	json.NewEncoder(w).Encode(movie)
-}
-
-func createMovie(movie Movie) {
-	movies = append(movies, movie)
 }
 
 func updateMovieHandler(w http.ResponseWriter, r *http.Request) {
@@ -122,6 +109,19 @@ func deleteMovieHandler(w http.ResponseWriter, r *http.Request) {
 	if err := deleteMovie(params["id"]); err != nil {
 		http.Error(w, err.Error(), http.StatusNotFound)
 	}
+}
+
+func getMovie(id string) (*Movie, error) {
+	for _, movie := range movies {
+		if movie.ID == id {
+			return &movie, nil
+		}
+	}
+	return nil, fmt.Errorf("Movie with id %v not found", id)
+}
+
+func createMovie(movie Movie) {
+	movies = append(movies, movie)
 }
 
 func deleteMovie(id string) error {
