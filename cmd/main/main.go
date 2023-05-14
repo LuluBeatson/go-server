@@ -23,6 +23,7 @@ func main() {
 	r.HandleFunc("/hello", helloHandler).Methods("GET")
 	r.HandleFunc("/form", formHandler).Methods("POST")
 	routes.RegisterMoviesRoutes(r)
+	routes.RegisterBookStoreRoutes(r)
 
 	fmt.Println("Starting server at port", port)
 	fmt.Printf("http://localhost:%v/", port)
