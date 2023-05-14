@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+
+	"github.com/gorilla/mux"
 )
 
 var port int
@@ -20,10 +22,17 @@ func main() {
 	http.HandleFunc("/hello", helloHandler)
 	http.HandleFunc("/form", formHandler)
 
+	r := mux.NewRouter()
+	r.HandleFunc("/movies", getMoviesHandler).Methods("GET")
+	r.HandleFunc("/movies/{id}", getMovieHandler).Methods("GET")
+	r.HandleFunc("/movies", createMovieHandler).Methods("POST")
+	r.HandleFunc("/movies/{id}", updateMovieHandler).Methods("PUT")
+	r.HandleFunc("/movies/{id}", deleteMovieHandler).Methods("DELETE")
+
 	fmt.Println("Starting server at port", port)
 	fmt.Printf("http://localhost:%v/", port)
 	address := fmt.Sprintf(":%v", port)
-	if err := http.ListenAndServe(address, nil); err != nil {
+	if err := http.ListenAndServe(address, r); err != nil {
 		log.Fatal(err)
 	}
 }
