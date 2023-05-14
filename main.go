@@ -22,7 +22,8 @@ func main() {
 
 	fmt.Println("Starting server at port", port)
 	fmt.Printf("http://localhost:%v/", port)
-	if err := http.ListenAndServe(":8080", nil); err != nil {
+	address := fmt.Sprintf(":%v", port)
+	if err := http.ListenAndServe(address, nil); err != nil {
 		log.Fatal(err)
 	}
 }
